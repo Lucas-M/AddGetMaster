@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>AddWidMaster Testing</title>
+	<script src="testdata.js" type="text/javascript"></script>
+	<script src="testing.js" type="text/javascript"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+	<script src="AddGet.js" type="text/javascript"></script>
+	<script src="Local.js" type="text/javascript"></script>
+	<script src="Query.js" type="text/javascript"></script>
+	<script src="luke.js" type="text/javascript"></script>
+	<script src="roger.js" type="text/javascript"></script>
+	<script src="cody.js" type="text/javascript"></script>
+	
+	<style  type="text/css">
+		storageSpaceBar {
+	    	background-color: #000000;
+	  	  	color:#FFFFFF; 
+		}
+
+		#storageSpaceValue {
+		    padding: 3px;
+		    margin-bottom: 5px;
+		    background-color: #7BA1E2; 
+		    width: 0%;
+		}
+	</style>
+	<script type="text/javascript">
+		// storage is the total possible in local storage 
+		// A formula for this is var storage = 1024 * 1024 * 5 - unescape(encodeURIComponent(JSON.stringify(localStorage))).length;
+		var storage = 5229349;
+		// localStorage.setItem("totalStorage", storage);
+		var storageSpace = storage;//localStorage.getItem("totalStorage");
+		var currentStorageSpace = 1024 * 1024 * 5 - unescape(encodeURIComponent(JSON.stringify(localStorage))).length; 
+		var percentageLeft = Math.round((currentStorageSpace / storageSpace) * 100);
+		function updateMemory () {
+			$('#storageSpaceValue').css('width', percentageLeft + "%");
+			$('#storageSpaceText').text("Remaining Storage: " + percentageLeft + "%  --  Actual bytes used: " + (storageSpace - currentStorageSpace));
+		}
+	</script>
+
+</head>
+<body>
+<div id='storageSpaceBar'>
+   	<div id='storageSpaceValue'>
+      <div id='storageSpaceText'></div>
+   </div>
+</div>
+
+<input id='runAllTests' type='button' value='Run All the Passing Tests'/> <label id='current_test'></label><label>Enter a function to run:</label><input id='function_to_run' size='30' value='Your_function_name_here'><input type='button' id='execute_function' value='Run Function'/><label>Degub on ? </label><input type='checkbox' id='debugon'><input type='button' value='Rerun autoloaded function' id='rerun'>
+
+</br>
+ <input id='mybutton' type='button' value='Show/Hide Local Storage'/>  
+<!-- 
+<select name='data_set' id='data_set'>
+	<option value='00'>00</option>
+	<option value='01'>01</option>
+	<option value='02'>02</option>
+	<option value='04'>04</option>
+	<option value='10'>10</option>
+	<option value='42'>42</option>	
+</select>
+-->
+</br>
+<div id="divwidsdisplay" style='display: none;'>Wids</div>
+<b>----------------------------</b>
+</br> 
+
+
+<div>
+	<span class='test_example'>
+		<b>Function Parameters :</b>
+		</br>
+	</span>
+	<span class='test_content' style='display: none;'>
+		</br>
+		<textarea rows="5" cols="100" id="function_parameters">{"wid":"wid50", "command.dtotype":"compositedto", "command.inherit":"inherit", "command.convertmethod":"", "command.accesstoken":"accesstoken"}</textarea>
+	</span>
+</div>
+<input type="button" value="GetWidMaster" onclick="javascript:testGetWidMaster();" />
+<input type="button" value="AddWidObject" onclick="javascript:testAddWidObject();"/>
+<input type="button" value="MongoDataQuery" onclick="javascript:testMongoQuery();" /><br>
+
+
+<div id = "Function_Output"></div>
+<!--
+<div>
+	<span class='test_example'>
+		<b>AddWidObject Parameters :</b>
+		</br>
+	</span>
+	<span class='test_content' style='display: none;'>
+		<i>Example</i> : "wid":"mary_jane1","first":"Mary","last":"Sue","age":"30","booksdto1.1.name":"Stardust Memories","metadata.method":"authordto1"
+		</br>
+	--><!--
+	<textarea rows="5" cols="100" id="addwidobjectparameters">{"wid":"mary_jane1","booksdto1.name":"DWrinkle In Time","booksdto1.ISBN":"D33004444419","booksdto1.publisher":"DPenguin Inc.","metadata.method":"authordto1"}</textarea>
+	--><!--
+	<textarea rows="5" cols="100" id="addwidobjectparameters">{"wid":"mary_jane1","booksdto1.name":"DWrinkle In Time","booksdto1.ISBN":"D33004444419","booksdto1.publisher":"DPenguin Inc."}</textarea>
+
+	</span>
+</div>
+<input type="button" value="AddWidObject" onclick="javascript:testAddWidObject();"/></br></br>
+
+<div>
+	<span class='test_example'>
+		<b>Query Parameters :</b>
+		</br>
+	</span>
+	<span class='test_content' style='display: none;'>
+		<i>Example</i> : {"relationshiprawmongoquery":"set1", "mongorelationshipdtotype":"ABC", "mongofilterrawquery":"set1", "mongorelationshipdirection":"forward", "mongorelationshiptype":"attributes", "mongorelationshipmethod":"XYZ", "mongoaggregation":"mongoaggregationvalue", "mongosetlimit":12345, "mongoreturncount":123, "mongoexplain":456, "mongosize":789}
+		</br>
+		<textarea rows="5" cols="100" id="queryparameters">{"":""}</textarea>
+	</span>
+</div>
+<input type="button" value="QueryWid" onclick="javascript:testQueryWid();" /></br></br>
+
+<div>
+    <span class='test_example'>  
+    	<b>MongoDataQuery :</b></br>
+    </span>
+  	<span class='test_content' style='display: none;'>
+	    <i>Examples</i> :
+	    </br>
+			{"multiplemongoquery":"wid9001"}</br>
+			{"singlemongoquery":"wid9003"}</br>
+			{"singlemongoquery":"wid100"}</br>
+			{"multiplemongoquery":"wid9001","favoritecolor":"blue"}   -- test the xtraParams with a query</br>
+			{"favoritecolor":"blue"}   -- test the xtraParams with no query</br>
+			{"mongorelquery":"{pulldummydata:set1}","mongorelationshipdirection":"forward","mongorelationshipmethod":"first","mongorelationshiptype":"attribute","mongodtotype":"rrrrrrrr"}   -- test sending relationshp a query string</br>
+			{"mongoaggquery":"{pulldummydata:set1}","mongoaggregation":"$count:(this is just a placeholder)"}   -- test sending query to aggregation</br>
+	    <textarea rows="5" cols="100" id="MongoDataQueryParameters">{"multiplemongoquery":"wid9001","mongosetlimit":"7","mongosetsortby":"name","mongosetfieldsinclude":"state","mongosetfieldsexclude":"zip","mongosetskip":"4","mongosethint":"phone","mongosize":"2001"}</textarea>
+    </span>
+</div>
+<input type="button" value="MongoDataQuery" onclick="javascript:testMongoQuery();" /></br></br>
+
+<div>
+    <span class='test_example'>  
+    	<b>convertToDot :</b></br>
+    </span>
+  	<span class='test_content' style='display: none;'>
+
+	    <textarea rows="5" cols="100" id="converttodotparameters">{ "class": "go.GraphLinksModel",
+  "linkFromPortIdProperty": "fromPort",
+  "linkToPortIdProperty": "toPort",
+  "nodeDataArray": [
+{"key":"unit One", "loc":"101 204", "leftArray":[ {"portColor":"#425e5c", "portId":"left0"} ], "topArray":[ {"portColor":"#d488a2", "portId":"top0"} ], "bottomArray":[ {"portColor":"#316571", "portId":"bottom0"} ], "rightArray":[ {"portColor":"#923951", "portId":"right0"},{"portColor":"#ef3768", "portId":"right1"} ] },
+{"key":"unit Two", "loc":"320 152", "leftArray":[ {"portColor":"#7d4bd6", "portId":"left0"},{"portColor":"#cc585c", "portId":"left1"},{"portColor":"#b1273a", "portId":"left2"} ], "topArray":[ {"portColor":"#14abef", "portId":"top0"} ], "bottomArray":[ {"portColor":"#dd45c7", "portId":"bottom0"},{"portColor":"#995aa6", "portId":"bottom1"},{"portColor":"#6b95cb", "portId":"bottom2"} ], "rightArray":[  ] },
+{"key":"unit Three", "loc":"384 319", "leftArray":[ {"portColor":"#bd8f27", "portId":"left0"},{"portColor":"#c14617", "portId":"left1"},{"portColor":"#47fa60", "portId":"left2"} ], "topArray":[ {"portColor":"#d08154", "portId":"top0"} ], "bottomArray":[ {"portColor":"#6cafdb", "portId":"bottom0"} ], "rightArray":[  ] },
+{"key":"unit Four", "loc":"138 351", "leftArray":[ {"portColor":"#491389", "portId":"left0"} ], "topArray":[ {"portColor":"#77ac1e", "portId":"top0"} ], "bottomArray":[ {"portColor":"#e9701b", "portId":"bottom0"} ], "rightArray":[ {"portColor":"#24d05e", "portId":"right0"},{"portColor":"#cfabaa", "portId":"right1"} ] }
+ ],
+  "linkDataArray": [
+{"from":"unit Four", "to":"unit One", "fromPort":"top0", "toPort":"bottom0"},
+{"from":"unit Four", "to":"unit Two", "fromPort":"top0", "toPort":"bottom0"},
+{"from":"unit Three", "to":"unit Two", "fromPort":"top0", "toPort":"bottom1"},
+{"from":"unit Four", "to":"unit Three", "fromPort":"right0", "toPort":"left0"},
+{"from":"unit Four", "to":"unit Three", "fromPort":"right1", "toPort":"left2"},
+{"from":"unit One", "to":"unit Two", "fromPort":"right0", "toPort":"left1"},
+{"from":"unit One", "to":"unit Two", "fromPort":"right1", "toPort":"left2"}
+ ]}</textarea>
+    </span>
+</div>
+<input type="button" value="ConvertToDot" onclick="javascript:testconverttodot();" /></br></br>
+-->
+
+
+<b>Output :</b></br>
+<div id ="divprint"></div>
+	<script>
+		// This is for the funcitonality of the testing screen itself
+		$('#mybutton').click(function() {
+		  if ($('#divwidsdisplay').css('display') == 'block'){
+		    $('#divwidsdisplay').hide('slow');
+		  }
+		  else{
+		  	displayAllWids();
+		    $('#divwidsdisplay').show('slow');
+		  }
+		});
+
+		// This is for the funcitonality of the testing screen itself
+		$('.test_example').click(function() {
+		  var test = $(this).next('span');
+		  if ($(test).css('display') != 'none'){
+		    $(test).hide('slow');
+		  }
+		  else{
+		    $(test).show('slow');
+		  }
+		});
+
+		// This will run activate all the passing tests to insure they still work
+		$('#runAllTests').click(function() {
+			RerunPassingTests();
+		});
+
+		$('#debugon').change(function() {
+			//alert('The checkbox changed');
+			if($('#debugon').is(':checked')) {
+				//alert('true');
+				debug = 'true';
+			} else {
+				//alert('false');
+				debug = 'false';
+			}
+		})
+
+
+		//This defines how data is stored and retrieved with local storage.
+		var widMasterKey = "widmaster_";
+		//clearLocalStorage()
+		$(document).ready(function() {
+			// $('#data_set').change(function(){
+			// 	loadLocalData($("#data_set").val());
+			// });
+			debug = 'false';
+			run_auto_function();
+		});
+
+		//	 if (typeof window[value["ExecuteThis"]] == 'function') {
+		//   result = window[value["ExecuteThis"]]();
+
+		$('#execute_function').click(function() {
+			var function_to_execute = $('#function_to_run').val();
+			//alert(function_to_execute);
+			var result = "";
+			result = execute_function(function_to_execute);
+
+		});
+
+		$('#rerun').click(function() {
+			alert('run it again');
+			run_auto_function();
+		})
+
+		function run_auto_function() {
+			clearLocalStorage();
+			updateMemory();
+			starttest();
+			updateMemory();
+		}
+
+
+	</script>
+</body>
+</html>
